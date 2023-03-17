@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 
-public class EncryptionUtil {
+public class EncryptionUtil {  //데이터 암호화 알고리즘. 그냥 갖다 쓰기
     private static final int COUNT_OF_ITERATION = 1000;
     private static final int LENGTH_OF_SALT = 16;
     private static final int RADIX = 16;

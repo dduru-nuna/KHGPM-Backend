@@ -50,5 +50,4 @@ public class Member {
                 .filter(authentication -> authentication instanceof BasicAuthentication)
                 .findFirst();
     }
-
 }

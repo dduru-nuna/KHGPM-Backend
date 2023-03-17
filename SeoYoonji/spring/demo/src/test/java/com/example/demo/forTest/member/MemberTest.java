@@ -24,7 +24,7 @@ public class MemberTest {
     @Test
     public void 회원가입_확인() {
         assertTrue(memberService.signUp(new MemberRegisterRequest(
-                "test@test.com", "test",
+                "test1@test.com", "test",
                 "집", "집", "집",
                 "01234"
         )));

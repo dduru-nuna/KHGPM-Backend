@@ -6,16 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
 @ToString(callSuper = true)
 @NoArgsConstructor
 @DiscriminatorValue(Authentication.BASIC_AUTH)
-public class BasicAuthentication extends Authentication{
+public class BasicAuthentication extends Authentication {
 
     @Setter
     @Column(nullable = false)
