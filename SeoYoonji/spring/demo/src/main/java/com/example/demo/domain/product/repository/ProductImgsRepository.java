@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ProductImgsRepository extends JpaRepository<ProductImgs, Long> {
-    @Query("select pi from ProductImgs pi join pi.product p where p.title = :title")
-    List<ProductImgs> findImgListByTitle(String title);
+    @Query("select pi from ProductImgs pi join pi.product p where p.productId = :id")
+    List<ProductImgs> findImgPathByProductId(Long id);
 }

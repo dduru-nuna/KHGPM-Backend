@@ -1,8 +1,6 @@
 package com.example.demo.domain.product.service;
 
-import com.example.demo.domain.product.controller.dto.ProductRequest;
-import com.example.demo.domain.product.controller.dto.ProductResponse;
-import com.example.demo.domain.product.controller.dto.RequestProductInfo;
+import com.example.demo.domain.product.controller.dto.*;
 import com.example.demo.domain.product.entity.Product;
 import com.example.demo.domain.product.entity.ProductImgs;
 import com.example.demo.domain.product.repository.ProductImgsRepository;
@@ -16,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,10 +57,11 @@ public class ProductServiceImpl implements ProductService {
         }
         productRepository.save(product);
 
-        for(ProductImgs productImgs: imgList) {
-            productImgsRepository.save(productImgs);
-        }
+//        for(ProductImgs productImgs: imgList) {
+//            productImgsRepository.save(productImgs);
+//        }
 
+        productImgsRepository.saveAll(imgList);
     }
 
     @Override
@@ -75,13 +75,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product read(Long productId) {
+    public ProductReadResponse read(Long productId) {
         Optional<Product> maybeProduct = productRepository.findById(productId);
 
         if(maybeProduct.isEmpty()) {
+            log.info("읽을수없음");
             return null;
         }
-        return maybeProduct.get();
+        Product product = maybeProduct.get();
+
+        ProductReadResponse productReadResponse = new ProductReadResponse(
+                product.getProductId(), product.getTitle(), product.getDetail(), product.getRegDate()
+        );
+
+        return productReadResponse;
     }
 
     @Override
@@ -104,5 +111,18 @@ public class ProductServiceImpl implements ProductService {
 
         productRepository.save(product);
         return product;
+    }
+
+    public List<ProductImgResponse> findProductImg(Long productId) {
+        List<ProductImgs> imgList = ProductImgsRepository.findImgPathByProductId(productId);
+        List<ProductImgResponse> productImgResponseList = new ArrayList<>();
+
+        for(ProductImgs productImgs: imgList) {
+            System.out.println("productImgs path: " + productImgs.getImgPath());
+
+            productImgResponseList.add(new ProductImgResponse(productImgs.getImgPath()))
+        }
+
+        return productImgResponseList;
     }
 }

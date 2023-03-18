@@ -1,8 +1,6 @@
 package com.example.demo.domain.product.controller;
 
-import com.example.demo.domain.product.controller.dto.ProductRequest;
-import com.example.demo.domain.product.controller.dto.ProductResponse;
-import com.example.demo.domain.product.controller.dto.RequestProductInfo;
+import com.example.demo.domain.product.controller.dto.*;
 import com.example.demo.domain.product.entity.Product;
 import com.example.demo.domain.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +34,7 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public Product productRead(@PathVariable("productId") Long productId) {
+    public ProductReadResponse productRead(@PathVariable("productId") Long productId) {
         return productService.read(productId);
     }
 
@@ -50,4 +48,12 @@ public class ProductController {
                                  @RequestBody ProductRequest productRequest) {
         return productService.modify(productId, productRequest);
     }
+
+    @GetMapping("/imageList/{productId}")
+    public List<ProductImgResponse> readProductImgs(@PathVariable("productId") Long productId) {
+        log.info("readProductImgs(): " + productId);
+
+        return productService.findProductImg(productId);
+    }
+
 }

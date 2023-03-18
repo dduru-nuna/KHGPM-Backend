@@ -12,7 +12,7 @@ public class ProductImgs {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productImgId;
+    private Long id;
 
     private String imgPath;
 
