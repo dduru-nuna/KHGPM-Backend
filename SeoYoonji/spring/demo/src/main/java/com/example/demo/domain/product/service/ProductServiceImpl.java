@@ -85,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = maybeProduct.get();
 
         ProductReadResponse productReadResponse = new ProductReadResponse(
-                product.getProductId(), product.getTitle(), product.getDetail(), product.getRegDate()
+                product.getProductId(), product.getTitle(), product.getPrice(), product.getDetail(), product.getRegDate()
         );
 
         return productReadResponse;
@@ -113,14 +113,15 @@ public class ProductServiceImpl implements ProductService {
         return product;
     }
 
+    @Override
     public List<ProductImgResponse> findProductImg(Long productId) {
-        List<ProductImgs> imgList = ProductImgsRepository.findImgPathByProductId(productId);
+        List<ProductImgs> imgList = productImgsRepository.findImgPathByProductId(productId);
         List<ProductImgResponse> productImgResponseList = new ArrayList<>();
 
         for(ProductImgs productImgs: imgList) {
             System.out.println("productImgs path: " + productImgs.getImgPath());
 
-            productImgResponseList.add(new ProductImgResponse(productImgs.getImgPath()))
+            productImgResponseList.add(new ProductImgResponse(productImgs.getImgPath()));
         }
 
         return productImgResponseList;
